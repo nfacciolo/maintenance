@@ -1,0 +1,9 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+app:
+    maintenance:
+        title: Site bakımda!
+        message: "Site şu anda bakımda. Endişelenme, bu durum nadiren olur ve genellikle çok uzun sürmez (ortalama birkaç dakika).<br><br>
+        Yaşanan rahatsızlık için özür dileriz ve tekrar bizi ziyaret etmeyi unutma :)"
+

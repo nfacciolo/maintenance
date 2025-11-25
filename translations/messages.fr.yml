@@ -1,0 +1,8 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+app:
+  maintenance:
+    title: Site en cours de maintenance !
+    message: "Le site est momentanément en cours de maintenance. Rassure-toi c'est exceptionnel et ça ne dure généralement pas longtemps (quelques minutes en moyenne).<br><br>
+    Désolé pour la gêne occasionnée et reviens vite nous voir :)"

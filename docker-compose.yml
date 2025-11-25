@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  proxy:
+    container_name: maintenance2_proxy
+    image: nginx:stable-alpine
+    depends_on:
+      - app
+    environment:
+      STACK_NAME: bitnami
+      WP_DEBUG: 0
+    volumes:
+      - ./public:/srv/app/public:ro
+      - ./docker/nginx/templates/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./docker/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - php_socket:/var/run/php
+    ports:
+      - "800:80"
+    networks:
+      - https
+      - app
+  app:
+    build:
+      context: .
+      target: app_php
+      args:
+        SYMFONY_VERSION: ${SYMFONY_VERSION:-}
+        STABILITY: ${STABILITY:-stable}
+    restart: unless-stopped
+    networks:
+      - app
+    volumes:
+      - php_socket:/var/run/php
+      - './:/srv/app'
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+
+volumes:
+  php_socket:
+
+networks:
+    app:
+      name: app
+    https:
+      external: true
