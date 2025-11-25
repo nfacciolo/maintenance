@@ -1,8 +1,23 @@
-# This file is part of the Sylius package.
-# (c) Paweł Jędrzejewski
+# Fichier de traductions pour la page de maintenance
+# Personnalisez ces messages selon vos besoins
 
 app:
   maintenance:
-    title: Site en cours de maintenance !
-    message: "Le site est momentanément en cours de maintenance. Rassure-toi c'est exceptionnel et ça ne dure généralement pas longtemps (quelques minutes en moyenne).<br><br>
-    Désolé pour la gêne occasionnée et reviens vite nous voir :)"
+    title: "Maintenance en cours"
+    meta_description: "Notre site est actuellement en maintenance. Nous reviendrons bientôt."
+    subtitle: "Notre site est temporairement indisponible pour une mise à jour planifiée. Nous serons de retour très bientôt."
+    status: "Maintenance programmée"
+
+    info:
+      duration:
+        title: "Durée estimée"
+        text: "Cette opération devrait durer environ 30 minutes"
+      reason:
+        title: "Raison"
+        text: "Mise à jour système et améliorations de performance"
+      impact:
+        title: "Impact"
+        text: "Tous les services seront de retour sous peu"
+
+    contact:
+      text: "Une question urgente ? N'hésitez pas à nous contacter"
