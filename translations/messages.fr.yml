@@ -1,23 +1,9 @@
 # Fichier de traductions pour la page de maintenance
-# Personnalisez ces messages selon vos besoins
+# Personnalisez ces messages selon vos besoins pour chaque client
 
 app:
   maintenance:
-    title: "Maintenance en cours"
-    meta_description: "Notre site est actuellement en maintenance. Nous reviendrons bientôt."
-    subtitle: "Notre site est temporairement indisponible pour une mise à jour planifiée. Nous serons de retour très bientôt."
-    status: "Maintenance programmée"
-
-    info:
-      duration:
-        title: "Durée estimée"
-        text: "Cette opération devrait durer environ 30 minutes"
-      reason:
-        title: "Raison"
-        text: "Mise à jour système et améliorations de performance"
-      impact:
-        title: "Impact"
-        text: "Tous les services seront de retour sous peu"
-
-    contact:
-      text: "Une question urgente ? N'hésitez pas à nous contacter"
+    title: "Site en cours de maintenance"
+    message: "Nous effectuons actuellement une maintenance planifiée pour améliorer nos services. Le site sera de nouveau accessible très prochainement.<br><br>Nous vous remercions pour votre compréhension. Si vous avez une question urgente, vous pouvez <a href=\"mailto:nicolas@reactic.io\">nous contacter</a>."
+    additional_info: "Cette maintenance devrait durer environ 30 minutes."
+    signature: "— L'équipe"

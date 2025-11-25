@@ -1,300 +1,29 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{{ 'app.maintenance.title'|trans }}{% endblock %}</title>
+    <title>{% block title %}{{'app.maintenance.title'|trans }}{% endblock %}</title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="{{ 'app.maintenance.meta_description'|trans }}">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
         <style>
-            :root {
-                /* Variables CSS pour personnalisation facile */
-                --primary-color: #4F46E5;
-                --secondary-color: #7C3AED;
-                --accent-color: #06B6D4;
-                --bg-gradient-start: #F8FAFC;
-                --bg-gradient-end: #E0E7FF;
-                --text-primary: #1E293B;
-                --text-secondary: #475569;
-                --card-bg: rgba(255, 255, 255, 0.9);
-                --card-border: rgba(79, 70, 229, 0.15);
-                --shadow-color: rgba(79, 70, 229, 0.1);
-            }
-
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
-
-            html, body {
-                width: 100%;
-                min-height: 100vh;
-                overflow-x: hidden;
-            }
-
-            body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-                background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-                color: var(--text-primary);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                position: relative;
-            }
-
-            /* Animated background elements */
-            body::before,
-            body::after {
-                content: '';
-                position: absolute;
-                border-radius: 50%;
-                filter: blur(100px);
-                opacity: 0.3;
-                animation: float 8s ease-in-out infinite;
-            }
-
-            body::before {
-                width: 500px;
-                height: 500px;
-                background: linear-gradient(135deg, #C7D2FE, #DDD6FE);
-                top: -150px;
-                left: -150px;
-                animation-delay: 0s;
-            }
-
-            body::after {
-                width: 450px;
-                height: 450px;
-                background: linear-gradient(135deg, #BAE6FD, #A5F3FC);
-                bottom: -150px;
-                right: -150px;
-                animation-delay: 2s;
-            }
-
-            @keyframes float {
-                0%, 100% { transform: translate(0, 0) scale(1); }
-                50% { transform: translate(30px, 30px) scale(1.1); }
-            }
-
-            .container {
-                max-width: 900px;
-                width: 100%;
-                position: relative;
-                z-index: 1;
-            }
-
-            .maintenance-card {
-                background: var(--card-bg);
-                backdrop-filter: blur(10px);
-                border: 1px solid var(--card-border);
-                border-radius: 24px;
-                padding: 60px 40px;
-                box-shadow: 0 20px 60px var(--shadow-color);
-                animation: slideIn 0.6s ease-out;
-            }
-
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .icon-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 30px;
-            }
-
-            .maintenance-icon {
-                width: 100px;
-                height: 100px;
-                animation: pulse 2s ease-in-out infinite;
-            }
-
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.05); opacity: 0.8; }
-            }
-
-            h1 {
-                font-size: 2.5rem;
-                font-weight: 700;
-                text-align: center;
-                margin-bottom: 20px;
-                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                line-height: 1.2;
-            }
-
-            .subtitle {
-                font-size: 1.25rem;
-                color: var(--text-secondary);
-                text-align: center;
-                margin-bottom: 40px;
-                font-weight: 400;
-                line-height: 1.6;
-            }
-
-            .info-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-                margin: 40px 0;
-            }
-
-            .info-card {
-                background: rgba(255, 255, 255, 0.7);
-                border: 1px solid var(--card-border);
-                border-radius: 16px;
-                padding: 24px;
-                text-align: center;
-                transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-                box-shadow: 0 4px 6px rgba(79, 70, 229, 0.05);
-            }
-
-            .info-card:hover {
-                transform: translateY(-5px);
-                background: rgba(255, 255, 255, 0.9);
-                box-shadow: 0 10px 20px rgba(79, 70, 229, 0.1);
-            }
-
-            .info-card-icon {
-                width: 40px;
-                height: 40px;
-                margin: 0 auto 16px;
-                opacity: 0.9;
-            }
-
-            .info-card h3 {
-                font-size: 1rem;
-                font-weight: 600;
-                margin-bottom: 8px;
-                color: var(--text-primary);
-            }
-
-            .info-card p {
-                font-size: 0.95rem;
-                color: var(--text-secondary);
-                line-height: 1.5;
-            }
-
-            .status-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                background: rgba(234, 179, 8, 0.15);
-                border: 1px solid rgba(234, 179, 8, 0.3);
-                color: #FCD34D;
-                padding: 10px 20px;
-                border-radius: 50px;
-                font-size: 0.9rem;
-                font-weight: 500;
-                margin: 30px auto;
-                width: fit-content;
-            }
-
-            .status-dot {
-                width: 8px;
-                height: 8px;
-                background: #FCD34D;
-                border-radius: 50%;
-                animation: blink 1.5s ease-in-out infinite;
-            }
-
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.3; }
-            }
-
-            .contact-section {
-                margin-top: 40px;
-                padding-top: 30px;
-                border-top: 1px solid var(--card-border);
-                text-align: center;
-            }
-
-            .contact-section p {
-                color: var(--text-secondary);
-                margin-bottom: 15px;
-            }
-
-            .contact-link {
-                color: var(--accent-color);
-                text-decoration: none;
-                font-weight: 600;
-                transition: color 0.3s ease;
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-            }
-
-            .contact-link:hover {
-                color: var(--primary-color);
-            }
-
-            /* Responsive */
-            @media (max-width: 768px) {
-                .maintenance-card {
-                    padding: 40px 24px;
-                }
-
-                h1 {
-                    font-size: 2rem;
-                }
-
-                .subtitle {
-                    font-size: 1.1rem;
-                }
-
-                .info-grid {
-                    grid-template-columns: 1fr;
-                    gap: 16px;
-                }
-
-                body::before,
-                body::after {
-                    width: 250px;
-                    height: 250px;
-                }
-            }
-
-            @media (max-width: 480px) {
-                h1 {
-                    font-size: 1.75rem;
-                }
-
-                .maintenance-icon {
-                    width: 80px;
-                    height: 80px;
-                }
-            }
-
-            /* Accessibility */
-            @media (prefers-reduced-motion: reduce) {
-                *,
-                *::before,
-                *::after {
-                    animation-duration: 0.01ms !important;
-                    animation-iteration-count: 1 !important;
-                    transition-duration: 0.01ms !important;
-                }
-            }
+            html, body { padding: 0; margin: 0; width: 100%; height: 100%; }
+            * {box-sizing: border-box;}
+            body { text-align: center; padding: 0; background: #fffdf5; color: #ffffff; font-family: 'Poppins', sans-serif; }
+            h1 { font-size: 50px; font-weight: 500; text-align: center; line-height: 1.2; color: #3d4661;}
+            body { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 1.18rem; color: #475569; text-align: center; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+            article { display: block; max-width: 740px; padding: 50px 30px; margin: 0 auto; }
+            a { color: #5d76d8; font-weight: bold;}
+            a:hover { text-decoration: none; color: #6366F1; }
+            svg { width: 75px; margin-top: 1em; }
         </style>
     {% endblock %}
 
@@ -304,73 +33,12 @@
 </head>
 <body>
 {% block body %}
-    <div class="container">
-        <div class="maintenance-card">
-            <div class="icon-container">
-                <svg class="maintenance-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="url(#gradient)" stroke-width="2"/>
-                    <path d="M12 6V12L16 14" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M8 2L6 6M16 2L18 6M2 8L6 6M22 8L18 6M2 16L6 18M22 16L18 18M8 22L6 18M16 22L18 18"
-                          stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-                    <defs>
-                        <linearGradient id="gradient" x1="0" y1="0" x2="24" y2="24">
-                            <stop offset="0%" style="stop-color:#4F46E5"/>
-                            <stop offset="100%" style="stop-color:#06B6D4"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-
-            <h1>{{ 'app.maintenance.title'|trans }}</h1>
-            <p class="subtitle">{{ 'app.maintenance.subtitle'|trans }}</p>
-
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                {{ 'app.maintenance.status'|trans }}
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 8V12L15 15" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="12" cy="12" r="9" stroke="#4F46E5" stroke-width="2"/>
-                    </svg>
-                    <h3>{{ 'app.maintenance.info.duration.title'|trans }}</h3>
-                    <p>{{ 'app.maintenance.info.duration.text'|trans }}</p>
-                </div>
-
-                <div class="info-card">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke="#7C3AED" stroke-width="2"/>
-                        <circle cx="12" cy="12" r="3" stroke="#7C3AED" stroke-width="2"/>
-                    </svg>
-                    <h3>{{ 'app.maintenance.info.reason.title'|trans }}</h3>
-                    <p>{{ 'app.maintenance.info.reason.text'|trans }}</p>
-                </div>
-
-                <div class="info-card">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 12L11 14L15 10" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="12" cy="12" r="9" stroke="#06B6D4" stroke-width="2"/>
-                    </svg>
-                    <h3>{{ 'app.maintenance.info.impact.title'|trans }}</h3>
-                    <p>{{ 'app.maintenance.info.impact.text'|trans }}</p>
-                </div>
-            </div>
-
-            <div class="contact-section">
-                <p>{{ 'app.maintenance.contact.text'|trans }}</p>
-                {% if contact_email is defined and contact_email %}
-                    <a href="mailto:{{ contact_email }}" class="contact-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        {{ contact_email }}
-                    </a>
-                {% endif %}
-            </div>
+    <article>
+        <h1>{{'app.maintenance.title'|trans }}</h1>
+        <div style="margin-bottom:10rem;">
+            <p>{{'app.maintenance.message'|trans|raw }} </p>
         </div>
-    </div>
+    </article>
 {% endblock %}
 </body>
 </html>
