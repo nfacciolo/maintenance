@@ -1,6 +1,6 @@
 server {
-    root /srv/app/public;
-    listen *:80;
+    root /home/${APP_USER}/app/public;
+    listen *:8080;
 
 	auth_basic_user_file /etc/nginx/.htpasswd;
 
@@ -10,7 +10,11 @@ server {
         set $auth_basic 'Strictement reservée aux personnes autorisées';
     }
 
-    if ($request_uri ~ ^/fr/subscription/hook-listener/mazoeivjfnmeighbamvenlihvnmaelihnvmoiehngmucithamezifhcnamoizehvnmaoih/.*$){
+    if ($request_uri ~ ^/images/.*$){
+        set $auth_basic "off";
+    }
+
+    if ($request_uri ~ ^/(fr|tr)/album/image/.*$){
         set $auth_basic "off";
     }
 
@@ -23,12 +27,8 @@ server {
 
     location ~ ^/index\.php(/|$) {
         resolver 127.0.0.11 valid=10s ipv6=off;
-        set $backendfpm "/var/run/php";
-        # Comment the next line and uncomment the next to enable dynamic resolution (incompatible with Kubernetes);
-        fastcgi_pass unix:var/run/php/php-fpm.sock;
-        #resolver 127.0.0.11;
-        #set $upstream_host php;
-        #fastcgi_pass $upstream_host:9000;
+        set $backendfpm "${STACK_NAME}_app:9000";
+        fastcgi_pass $backendfpm;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;

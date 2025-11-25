@@ -1,51 +1,68 @@
-version: "3.7"
-
 services:
   proxy:
-    container_name: maintenance2_proxy
-    image: nginx:stable-alpine
+    container_name: ${PROJECT_NAME}_proxy
+    image: nginxinc/nginx-unprivileged:stable-alpine
     depends_on:
-      - app
+      app:
+        condition: service_healthy
+    #            - node
     environment:
-      STACK_NAME: bitnami
+      STACK_NAME: ${PROJECT_NAME}
       WP_DEBUG: 0
+      APP_USER: ${APP_USER:-symfony}
     volumes:
-      - ./public:/srv/app/public:ro
+      - ./public:/home/${APP_USER:-symfony}/app/public:ro
+      #            - ./public/media:/home/${APP_USER:-symfony}/app/public/media:ro
       - ./docker/nginx/templates/default.conf.template:/etc/nginx/templates/default.conf.template
       - ./docker/nginx/.htpasswd:/etc/nginx/.htpasswd
-      - php_socket:/var/run/php
-    ports:
-      - "800:80"
+    #            - php_socket:/var/run/php
     networks:
       - https
       - app
+    ports:
+      - "800:8080"
+
   app:
+    container_name: ${PROJECT_NAME}_app
     build:
       context: .
-      target: app_php
+      target: app_php_dev
       args:
-        SYMFONY_VERSION: ${SYMFONY_VERSION:-}
-        STABILITY: ${STABILITY:-stable}
-    restart: unless-stopped
-    networks:
-      - app
+        SYMFONY_VERSION: ${SYMFONY_VERSION:-7.2.*}
+        APP_USER: ${APP_USER:-symfony}
+    #        restart: unless-stopped
     volumes:
-      - php_socket:/var/run/php
-      - './:/srv/app'
+      - ./:/home/${APP_USER:-symfony}/app/
+      - ./docker/restic/pass:/home/${APP_USER:-symfony}/pass
+    #   - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+
     healthcheck:
-      interval: 10s
+      test: ["CMD", "test", "-f", "/home/${APP_USER:-symfony}/app/public/index.php"]
+      interval: 5s
       timeout: 3s
-      retries: 3
-      start_period: 30s
+      retries: 20
+      start_period: 60s
     environment:
       APP_ENV: dev
       APP_DEBUG: 1
+      XDEBUG_MODE: 'debug'
+      PHP_DATE_TIMEZONE: 'Europe/Paris'
+      XDEBUG_CONFIG: 'mode=debug client_host=host.docker.internal idekey=phpstorm-xdebug start_with_request=trigger remote_handler=dbgp client_port=9003'
 
-volumes:
-  php_socket:
+      RESTIC_PASSWORD_FILE: /home/${APP_USER:-symfony}/pass
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - app
+
+
+
+
 
 networks:
-    app:
-      name: app
-    https:
-      external: true
+  https:
+    external: true
+  adminer:
+    external: true
+  app:
+    name: ${PROJECT_NAME}_app
