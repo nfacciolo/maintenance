@@ -1,5 +1,5 @@
 server {
-    root /home/${APP_USER}/app/public;
+    root /srv/app/public/;
     listen *:8080;
 
 	auth_basic_user_file /etc/nginx/.htpasswd;
@@ -27,7 +27,7 @@ server {
 
     location ~ ^/index\.php(/|$) {
         resolver 127.0.0.11 valid=10s ipv6=off;
-        set $backendfpm "${STACK_NAME}_app:9000";
+        set $backendfpm "${PROJECT_NAME}_app:9000";
         fastcgi_pass $backendfpm;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;

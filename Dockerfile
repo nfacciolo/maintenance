@@ -127,8 +127,8 @@ COPY --chown=${APP_USER}:${APP_USER} bin bin/
 COPY --chown=${APP_USER}:${APP_USER} config config/
 COPY --chown=${APP_USER}:${APP_USER} public public/
 COPY --chown=${APP_USER}:${APP_USER} src src/
-#COPY --chown=${APP_USER}:${APP_USER} templates templates/
-#COPY --chown=${APP_USER}:${APP_USER} translations translations/
+COPY --chown=${APP_USER}:${APP_USER} templates templates/
+COPY --chown=${APP_USER}:${APP_USER} translations translations/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \

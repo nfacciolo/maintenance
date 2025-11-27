@@ -7,11 +7,11 @@ services:
         condition: service_healthy
     #            - node
     environment:
-      STACK_NAME: ${PROJECT_NAME}
+      PROJECT_NAME: ${PROJECT_NAME}
       WP_DEBUG: 0
       APP_USER: ${APP_USER:-symfony}
     volumes:
-      - ./public:/home/${APP_USER:-symfony}/app/public:ro
+      - ./public:/srv/app/public/:ro
       #            - ./public/media:/home/${APP_USER:-symfony}/app/public/media:ro
       - ./docker/nginx/templates/default.conf.template:/etc/nginx/templates/default.conf.template
       - ./docker/nginx/.htpasswd:/etc/nginx/.htpasswd
@@ -32,7 +32,7 @@ services:
         APP_USER: ${APP_USER:-symfony}
     #        restart: unless-stopped
     volumes:
-      - ./:/home/${APP_USER:-symfony}/app/
+      - ./:/srv/app/
       - ./docker/restic/pass:/home/${APP_USER:-symfony}/pass
     #   - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
