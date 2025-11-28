@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{{'app.maintenance.title'|trans }}{% endblock %}</title>
+    <title>{% block title %}Site en cours de maintenance{% endblock %}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -34,9 +34,9 @@
 <body>
 {% block body %}
     <article>
-        <h1>{{'app.maintenance.title'|trans }}</h1>
+        <h1>Site en cours de maintenance</h1>
         <div style="margin-bottom:10rem;">
-            <p>{{'app.maintenance.message'|trans|raw }} </p>
+            <p>Nous effectuons actuellement une maintenance planifiée pour améliorer nos services. Le site sera de nouveau accessible très prochainement.<br><br>Nous vous remercions pour votre compréhension. Si vous avez une question urgente, vous pouvez <a href="mailto:nicolas@reactic.io">nous contacter</a>.</p>
         </div>
     </article>
 {% endblock %}

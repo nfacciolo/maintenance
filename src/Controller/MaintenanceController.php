@@ -6,21 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(
-    path: '/{_locale}',
-    name: 'maintenance',
-    requirements: [
-        '_locale' => 'en|fr|tr',
-    ],
-    defaults: ['_locale' => 'fr'],
-)]
-class MaintenanceController extends  AbstractController
+class MaintenanceController extends AbstractController
 {
-    #[Route('/', name: '_page', methods: ['GET'])]
+    #[Route(
+        '/{path}',
+        name: 'maintenance_page',
+        requirements: ['path' => '.*'],
+        defaults: ['path' => ''],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']
+    )]
     public function maintenance(): Response
     {
-        return $this->render('base.html.twig', [
-            'current_page' => 'sent_flashe',
-        ]);
+        $response = $this->render('base.html.twig');
+        $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE); // 503
+        $response->headers->set('Retry-After', '3600'); // 1 heure
+
+        return $response;
     }
 }
