@@ -45,17 +45,17 @@ RUN set -eux; \
     composer clear-cache
 
 # Set working directory to user's home/app
-WORKDIR /home/${APP_USER}/app
+WORKDIR /srv/app
 
 # Update PATH for the user
-ENV PATH="${PATH}:/home/${APP_USER}/.composer/vendor/bin"
+ENV PATH="${PATH}:/srv/app/.composer/vendor/bin"
 
 # Copy entrypoint script (as root)
 COPY --link --chmod=755  docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 # Change ownership of the working directory
-RUN chown -R ${APP_USER}:${APP_USER} /home/${APP_USER}
+RUN chown -R ${APP_USER}:${APP_USER} /srv/app
 
 # Switch to application user
 USER ${APP_USER}
@@ -109,8 +109,6 @@ COPY docker/php/conf.d/app.prod.ini.template /tmp/app.prod.ini.template
 RUN envsubst '${APP_USER}' < /tmp/app.prod.ini.template > "$PHP_INI_DIR/conf.d/app.prod.ini" && \
     rm /tmp/app.prod.ini.template
 
-# Switch back to application user
-USER ${APP_USER}
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link --chown=${APP_USER}:${APP_USER} composer.* symfony.* ./
